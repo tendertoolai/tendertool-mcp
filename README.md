@@ -18,7 +18,7 @@ pnpm run build
 
 | Umgebungsvariable | Zweck |
 |---|---|
-| `TENDERTOOL_API_URL` | Basis-URL des Backends, z.B. `https://tendertool-backend.ddev.site` |
+| `TENDERTOOL_API_URL` | Basis-URL des Backends, z.B. `https://app.tendertool.de` |
 | `TENDERTOOL_API_TOKEN` | Personal Access Token (`ttp_…`) |
 | `TENDERTOOL_INSECURE_TLS` | **Nur lokal (DDEV):** `1` akzeptiert selbstsignierte Zertifikate — deaktiviert die TLS-Prüfung prozessweit. Niemals gegen Produktion setzen, sonst ist der Token per MITM abgreifbar. |
 
@@ -26,7 +26,7 @@ pnpm run build
 
 ```bash
 claude mcp add tendertool \
-  --env TENDERTOOL_API_URL=https://app.example.com \
+  --env TENDERTOOL_API_URL=https://app.tendertool.de \
   --env TENDERTOOL_API_TOKEN=ttp_... \
   -- node /pfad/zu/tendertool-mcp/dist/index.js
 ```
@@ -42,7 +42,7 @@ Für eine lokale DDEV-Instanz zusätzlich `--env TENDERTOOL_INSECURE_TLS=1` (Hin
       "command": "node",
       "args": ["/pfad/zu/tendertool-mcp/dist/index.js"],
       "env": {
-        "TENDERTOOL_API_URL": "https://app.example.com",
+        "TENDERTOOL_API_URL": "https://app.tendertool.de",
         "TENDERTOOL_API_TOKEN": "ttp_..."
       }
     }
