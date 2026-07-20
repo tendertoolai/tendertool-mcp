@@ -1,7 +1,16 @@
 {
   "name": "tendertool-mcp",
   "version": "0.1.0",
-  "description": "MCP-Server für TenderTool: Referenzen und Vault-Dokumente per Claude verwalten",
+  "description": "MCP-Server für TenderTool: Referenzen und Vault-Dokumente per KI-Assistent verwalten",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tendertoolai/tendertool-mcp.git"
+  },
+  "homepage": "https://github.com/tendertoolai/tendertool-mcp#readme",
+  "bugs": {
+    "url": "https://github.com/tendertoolai/tendertool-mcp/issues"
+  },
   "type": "module",
   "bin": {
     "tendertool-mcp": "dist/index.js"
@@ -11,6 +20,7 @@
   ],
   "scripts": {
     "build": "tsc",
+    "prepare": "npm run build",
     "start": "node dist/index.js",
     "typecheck": "tsc --noEmit"
   },

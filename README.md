@@ -1,26 +1,21 @@
 # tendertool-mcp
 
-MCP-Server für TenderTool: Referenzen und Vault-Dokumente direkt aus Claude (Code/Desktop) verwalten.
+Offizieller MCP-Server für [TenderTool](https://app.tendertool.de): Referenzen und Vault-Dokumente direkt aus KI-Assistenten wie Claude (Code/Desktop) verwalten.
 
 ## Voraussetzungen
 
-- Node.js ≥ 18, pnpm
-- Ein Personal Access Token aus TenderTool (`POST /api/user/api-tokens`, Klartext-Token wird nur einmal angezeigt)
-
-## Setup
-
-```bash
-pnpm install
-pnpm run build
-```
+- Node.js ≥ 18 (inkl. `npx`)
+- Ein TenderTool-API-Key — erstellen Sie ihn in TenderTool unter **Profil → KI-Anbindung** (der Key beginnt mit `ttp_` und wird nur einmalig angezeigt)
 
 ## Konfiguration
 
 | Umgebungsvariable | Zweck |
 |---|---|
 | `TENDERTOOL_API_URL` | Basis-URL des Backends, z.B. `https://api.tendertool.de` |
-| `TENDERTOOL_API_TOKEN` | Personal Access Token (`ttp_…`) |
-| `TENDERTOOL_INSECURE_TLS` | **Nur lokal (DDEV):** `1` akzeptiert selbstsignierte Zertifikate — deaktiviert die TLS-Prüfung prozessweit. Niemals gegen Produktion setzen, sonst ist der Token per MITM abgreifbar. |
+| `TENDERTOOL_API_TOKEN` | Ihr TenderTool-API-Key (`ttp_…`) |
+| `TENDERTOOL_INSECURE_TLS` | **Nur lokale Entwicklung:** `1` akzeptiert selbstsignierte Zertifikate — deaktiviert die TLS-Prüfung prozessweit. Niemals gegen Produktion setzen. |
+
+## Installation
 
 ### Claude Code
 
@@ -28,10 +23,8 @@ pnpm run build
 claude mcp add tendertool \
   --env TENDERTOOL_API_URL=https://api.tendertool.de \
   --env TENDERTOOL_API_TOKEN=ttp_... \
-  -- node /pfad/zu/tendertool-mcp/dist/index.js
+  -- npx -y github:tendertoolai/tendertool-mcp
 ```
-
-Für eine lokale DDEV-Instanz zusätzlich `--env TENDERTOOL_INSECURE_TLS=1` (Hinweis oben beachten).
 
 ### Claude Desktop (`claude_desktop_config.json`)
 
@@ -39,8 +32,8 @@ Für eine lokale DDEV-Instanz zusätzlich `--env TENDERTOOL_INSECURE_TLS=1` (Hin
 {
   "mcpServers": {
     "tendertool": {
-      "command": "node",
-      "args": ["/pfad/zu/tendertool-mcp/dist/index.js"],
+      "command": "npx",
+      "args": ["-y", "github:tendertoolai/tendertool-mcp"],
       "env": {
         "TENDERTOOL_API_URL": "https://api.tendertool.de",
         "TENDERTOOL_API_TOKEN": "ttp_..."
@@ -49,6 +42,8 @@ Für eine lokale DDEV-Instanz zusätzlich `--env TENDERTOOL_INSECURE_TLS=1` (Hin
   }
 }
 ```
+
+`npx` lädt und baut den Server beim ersten Start automatisch; danach wird der Cache verwendet.
 
 ## Tools
 
@@ -63,4 +58,18 @@ Für eine lokale DDEV-Instanz zusätzlich `--env TENDERTOOL_INSECURE_TLS=1` (Hin
 | `vault_document_update` | Metadaten (Typ, Daten, Notizen) ändern |
 | `vault_document_delete` | Dokument inkl. Datei löschen |
 
-Die Mandanten-Trennung erzwingt das Backend serverseitig — der Token bestimmt User und Organisation.
+Die Mandanten-Trennung erzwingt das TenderTool-Backend serverseitig — der API-Key bestimmt Benutzer und Organisation.
+
+## Entwicklung
+
+```bash
+git clone https://github.com/tendertoolai/tendertool-mcp.git
+cd tendertool-mcp
+pnpm install
+pnpm run build
+node dist/index.js   # erwartet TENDERTOOL_API_URL + TENDERTOOL_API_TOKEN als Env
+```
+
+## Lizenz
+
+[MIT](LICENSE) — © 2026 Die Lobby GmbH
