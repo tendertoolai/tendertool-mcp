@@ -4,12 +4,17 @@ import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js"
 import { z } from "zod";
 import { TenderToolClient } from "./client.js";
 
-const apiUrl = process.env.TENDERTOOL_API_URL?.replace(/\/+$/, "");
+// Produktions-URL als Default — TENDERTOOL_API_URL muss nur für
+// Dev-/Staging-Umgebungen gesetzt werden.
+const DEFAULT_API_URL = "https://api.tendertool.de";
+
+const apiUrl = (process.env.TENDERTOOL_API_URL ?? DEFAULT_API_URL).replace(/\/+$/, "");
 const apiToken = process.env.TENDERTOOL_API_TOKEN;
 
-if (!apiUrl || !apiToken) {
+if (!apiToken) {
   console.error(
-    "Fehlende Konfiguration: TENDERTOOL_API_URL und TENDERTOOL_API_TOKEN müssen als Umgebungsvariablen gesetzt sein.",
+    "Fehlende Konfiguration: TENDERTOOL_API_TOKEN muss als Umgebungsvariable gesetzt sein. " +
+      "Den API-Key erstellen Sie in TenderTool unter Profil → KI-Anbindung.",
   );
   process.exit(1);
 }

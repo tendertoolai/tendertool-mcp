@@ -11,8 +11,8 @@ Offizieller MCP-Server für [TenderTool](https://app.tendertool.de): Referenzen 
 
 | Umgebungsvariable | Zweck |
 |---|---|
-| `TENDERTOOL_API_URL` | Basis-URL des Backends, z.B. `https://api.tendertool.de` |
-| `TENDERTOOL_API_TOKEN` | Ihr TenderTool-API-Key (`ttp_…`) |
+| `TENDERTOOL_API_TOKEN` | **Erforderlich.** Ihr TenderTool-API-Key (`ttp_…`) |
+| `TENDERTOOL_API_URL` | Optional. Basis-URL des Backends — Standard: `https://api.tendertool.de`. Nur für Dev-/Staging-Umgebungen nötig. |
 | `TENDERTOOL_INSECURE_TLS` | **Nur lokale Entwicklung:** `1` akzeptiert selbstsignierte Zertifikate — deaktiviert die TLS-Prüfung prozessweit. Niemals gegen Produktion setzen. |
 
 ## Installation
@@ -21,7 +21,6 @@ Offizieller MCP-Server für [TenderTool](https://app.tendertool.de): Referenzen 
 
 ```bash
 claude mcp add tendertool \
-  --env TENDERTOOL_API_URL=https://api.tendertool.de \
   --env TENDERTOOL_API_TOKEN=ttp_... \
   -- npx -y github:tendertoolai/tendertool-mcp
 ```
@@ -35,7 +34,6 @@ claude mcp add tendertool \
       "command": "npx",
       "args": ["-y", "github:tendertoolai/tendertool-mcp"],
       "env": {
-        "TENDERTOOL_API_URL": "https://api.tendertool.de",
         "TENDERTOOL_API_TOKEN": "ttp_..."
       }
     }
