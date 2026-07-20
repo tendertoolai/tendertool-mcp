@@ -13,7 +13,6 @@ Offizieller MCP-Server für [TenderTool](https://app.tendertool.de): Referenzen 
 |---|---|
 | `TENDERTOOL_API_TOKEN` | **Erforderlich.** Ihr TenderTool-API-Key (`ttp_…`) |
 | `TENDERTOOL_API_URL` | Optional. Basis-URL des Backends — Standard: `https://api.tendertool.de`. Nur für Dev-/Staging-Umgebungen nötig. |
-| `TENDERTOOL_INSECURE_TLS` | **Nur lokale Entwicklung:** `1` akzeptiert selbstsignierte Zertifikate — deaktiviert die TLS-Prüfung prozessweit. Niemals gegen Produktion setzen. |
 
 ## Installation
 
@@ -65,8 +64,15 @@ git clone https://github.com/tendertoolai/tendertool-mcp.git
 cd tendertool-mcp
 pnpm install
 pnpm run build
-node dist/index.js   # erwartet TENDERTOOL_API_URL + TENDERTOOL_API_TOKEN als Env
+TENDERTOOL_API_URL=https://tendertool-backend.ddev.site \
+TENDERTOOL_API_TOKEN=ttp_... \
+TENDERTOOL_INSECURE_TLS=1 \
+node dist/index.js
 ```
+
+`TENDERTOOL_INSECURE_TLS=1` akzeptiert selbstsignierte Zertifikate lokaler
+Instanzen (z.B. DDEV) — es deaktiviert die TLS-Prüfung prozessweit und darf
+niemals gegen Produktion gesetzt werden.
 
 ## Lizenz
 
