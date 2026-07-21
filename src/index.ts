@@ -78,9 +78,12 @@ server.registerTool(
   {
     title: "Referenz anlegen",
     description:
-      "Legt eine neue KB-Referenz an. Für reference_type=project sollte data enthalten: " +
-      "title, client_name, period_from/period_to (JJJJ-MM), contract_value (Zahl, EUR netto), " +
+      "Legt eine neue KB-Referenz an. Die data-Felder sind typabhängig — exakt diese Schlüssel verwenden: " +
+      "project: title, client_name, period_from/period_to (JJJJ-MM), contract_value (Zahl, EUR netto), " +
       "short_description, long_description, contact_person. " +
+      "person: name, position, qualifications (Text), experience_years (Zahl), certifications (Text). " +
+      "asset: type, year (Zahl), capacity, location. " +
+      "rate: label, value (Zahl, EUR netto), unit, notes. " +
       "industry_tags = Branche des Auftraggebers, service_tags = Leistungsarten.",
     inputSchema: {
       reference_type: referenceType,
@@ -112,7 +115,8 @@ server.registerTool(
     description:
       "Aktualisiert eine KB-Referenz. Nur übergebene Felder werden geändert. " +
       "Achtung: data ersetzt das komplette data-Objekt — vorher mit reference_list den Ist-Stand laden " +
-      "und das vollständige Objekt mit den Änderungen zurückschicken.",
+      "und das vollständige Objekt mit den Änderungen zurückschicken. " +
+      "Gültige data-Schlüssel je Typ: siehe reference_create.",
     inputSchema: {
       id: z.number().int().positive(),
       data: z.record(z.unknown()).optional(),
